@@ -1,0 +1,59 @@
+CREATE DATABASE gestion_ouvrages;
+
+USE gestion_ouvrages;
+
+-- Table 'region'
+CREATE TABLE region (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    code VARCHAR(50),
+    libelle VARCHAR(255)
+);
+
+-- Table 'departement'
+CREATE TABLE departement (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    libelle VARCHAR(255),
+    region_id INT,
+    FOREIGN KEY (region_id) REFERENCES region(id)
+);
+
+-- Table 'commune'
+CREATE TABLE commune (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    libelle VARCHAR(255),
+    departement_id INT,
+    FOREIGN KEY (departement_id) REFERENCES departement(id)
+);
+
+-- Table 'localite'
+CREATE TABLE localite (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    libelle VARCHAR(255),
+    type_ouvrage VARCHAR(255),
+    commune_id INT,
+    FOREIGN KEY (commune_id) REFERENCES commune(id)
+);
+
+-- Table 'ouvrage'
+CREATE TABLE ouvrage (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    type_ouvrage VARCHAR(255),
+    connectivite VARCHAR(255),
+    type_sol VARCHAR(255),
+    bailleur VARCHAR(255),
+    etat_ouvrage VARCHAR(255),
+    date_reception DATE,
+    entreprise_id INT,
+    localite_id INT,
+    FOREIGN KEY (localite_id) REFERENCES localite(id)
+);
+
+-- Table 'sigautonome_site'
+CREATE TABLE sigautonome_site (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    libelle VARCHAR(255),
+    date_reception DATE,
+    entreprise_id INT,
+    localite_id INT,
+    FOREIGN KEY (localite_id) REFERENCES localite(id)
+);
